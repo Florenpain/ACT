@@ -1,47 +1,84 @@
-def find_rectangle():
+import askTheUser
+
+
+def main():
     # The user gives us all the data we need to solve the problem
-    l1, h1 = input().split()
-    l = int(l1)
-    h = int(h1)
-    n = int(input())
-    points = [(0, 0)]
-    for i in range(0, int(n)):
-        x, y = input().split()
-        x = int(x)
-        y = int(y)
-        points.append((x, y))
-    points.append((l, 0))
-    # print('l :', l)
-    # print('h :', h)
-    # print('n :', n)
-    # print('points :', points)
+    points, largeur, hauteur = askTheUser.main()
 
+    aire_max_n3 = n3(points, hauteur)
+    aire_max_n2 = n2(points, hauteur)
+    aire_max_diviser_pour_regner = diviserPourRegner(points, 0, largeur, hauteur)
+    aire_max_lineaire = lineaire(points, hauteur)
+
+    print("aire n3", aire_max_n3)
+    print("aire n2", aire_max_n2)
+    print("aire diviser pour mieux reigner", aire_max_diviser_pour_regner)
+    print("aire linéaire", aire_max_lineaire)
+
+
+def n3(points, hauteur):
     area_max = 0
-    points_best_rectangle = [(0, 0), (0, 0), (0, 0), (0, 0)]
-
-    # n+2-1 for the 2 points we add and -1 because we are going to take 2 points to find a rectangle
-    for i in range(0, n+1):
-        (x1, y1) = points[i]
-        (x2, y2) = points[i+1]
-        result = h * (x2-x1)
-        if result > area_max:
-            area_max = result
-            points_best_rectangle = [(x1, 0), (x1, h), (x2, h), (x2, 0)]
-
-    # n because we take 3 points in the list to find a rectangle
+    # points_best_rectangle = [(0, 0), (0, 0), (0, 0), (0, 0)]
+    n = len(points)
     for i in range(0, n):
-        (x1, y1) = points[i]
-        (x2, y2) = points[i + 1]
-        (x3, y3) = points[i + 2]
-        result = y2 * (x3 - x1)
-        if result > area_max:
-            area_max = result
-            points_best_rectangle = [(x1, 0), (x1, y2), (x3, y2), (x3, 0)]
+        for j in range(i, n):
+            hauteur_max = hauteur
+            (x1, y1) = points[i]
+            (x2, y2) = points[j]
+            largeur_max = x2 - x1
+            for k in range(i + 1, j):
+                (x3, y3) = points[k]
+                if hauteur_max > y3:
+                    hauteur_max = y3
+            if largeur_max * hauteur_max > area_max:
+                area_max = largeur_max * hauteur_max
+                # points_best_rectangle = [(x1, 0), (x1, hauteur_max), (x2, hauteur_max), (x2, 0)]
+    return area_max
 
-    print(area_max)
-    # print(points_best_rectangle)
+
+def n2(points, hauteur):
+    area_max = 0
+    # points_best_rectangle = [(0, 0), (0, 0), (0, 0), (0, 0)]
+    n = len(points)
+    for i in range(0, n):
+        hauteur_max = hauteur
+        for j in range(i + 1, n):
+            (x1, y1) = points[i]
+            (x2, y2) = points[j]
+            largeur_max = x2 - x1
+            if area_max < largeur_max * hauteur_max:
+                area_max = largeur_max * hauteur_max
+            if hauteur_max > y2:
+                hauteur_max = y2
+    return area_max
 
 
-# Press the green button in the gutter to run the script.
+def diviserPourRegner(liste_triee_par_abscisse, plan_x1, plan_x2, hauteur):
+    liste_triee_par_ordonnee = sorted(liste_triee_par_abscisse, key=lambda point: point[1])
+    largeur_plan = plan_x2 - plan_x1
+    (x1, y1) = liste_triee_par_ordonnee[0]  # point le plus bas
+    aire = largeur_plan * y1
+    index_pivot = liste_triee_par_abscisse.index((x1, y1))
+    aire_max_plan_gauche = 0
+    aire_max_plan_droit = 0
+    if len(liste_triee_par_abscisse[:index_pivot]) > 0:
+        aire_max_plan_gauche = diviserPourRegner(liste_triee_par_abscisse[:index_pivot], plan_x1, x1, hauteur)
+    if len(liste_triee_par_abscisse[index_pivot+1:]) > 0:
+        aire_max_plan_droit = diviserPourRegner(liste_triee_par_abscisse[index_pivot+1:], x1, plan_x2, hauteur)
+    return max(aire, aire_max_plan_gauche, aire_max_plan_droit)
+
+
+def lineaire(points, hauteur):
+    pile = [points[0]]
+    aire = 0
+    for i in range(1, len(points)):
+        while len(pile) > 0 and pile[len(pile) - 1][1] > points[i][1]:
+            hauteur_min = pile.pop()[1]
+            if len(pile) > 0:
+                aire = max(aire, (points[i][0] - pile[len(pile) - 1][0]) * hauteur_min)
+        pile.append(points[i])
+    return aire
+
+
 if __name__ == '__main__':
-    find_rectangle()
+    main()
