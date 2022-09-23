@@ -1,4 +1,4 @@
-# ACT
+# ACT : Algorithme et Complexité
 
 ## Auteurs 
 
@@ -9,11 +9,15 @@
 
 Ce dépôt contient les fichiers des TPs effectués lors de l'UE ACT à l'Université de Lille.
 
+## Liste des TPs
+
+---------------------------------------
+
 ### [TP1 : Le plus grand rectangle](https://github.com/Florenpain/ACT/tree/main/TP1)
 
 *[Lien du sujet](https://moodle.univ-lille.fr/pluginfile.php/2602491/mod_resource/content/3/TP_DivConquer_2022.pdf)*
 
-#### Résumé 
+#### Résumé :
 
 Soit n un entier positif. On souhaite dessiner un rectangle, dans un plan donné, dont la base est sur l’axe des x, 
 dont l’intérieur ne contienne aucun des n points et qui soit de surface maximale. 
@@ -24,4 +28,4 @@ possible de traiter rapidement des données de grande taille
 - [x] Question 1 : Une première approche
 - [x] Question 2 : [Diviser pour régner](https://github.com/Florenpain/ACT/blob/main/TP1/diviserPourRegner.py)
 - [x] Question 3 : [Linéaire](https://github.com/Florenpain/ACT/blob/main/TP1/lineaire.py)
-
+---------------------------------------
