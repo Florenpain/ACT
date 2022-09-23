@@ -1,4 +1,4 @@
-# ACT : Algorithme et Complexité
+# [ACT : Algorithme et Complexité](https://www.fil.univ-lille.fr/portail/index.php?dipl=MInfo&sem=ES&ue=ACT&label=Pr%C3%A9sentation)
 
 ## Auteurs 
 
@@ -10,8 +10,6 @@
 Ce dépôt contient les fichiers des TPs effectués lors de l'UE ACT à l'Université de Lille.
 
 ## Liste des TPs
-
----------------------------------------
 
 ### [TP1 : Le plus grand rectangle](https://github.com/Florenpain/ACT/tree/main/TP1)
 
