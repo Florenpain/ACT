@@ -18,10 +18,9 @@ def diviserPourRegner(liste_triee_par_abscisse, plan_x1, plan_x2, hauteur):
         if point[1] < point_le_plus_bas[1]: # Si le point est plus bas que le point le plus bas
             point_le_plus_bas = point # On met à jour le point le plus bas
     index_pivot = liste_triee_par_abscisse.index(point_le_plus_bas)  # On récupère l'index du point le plus bas
-    pivot = liste_triee_par_abscisse[index_pivot]  # On récupère les coordonnées point le plus bas
-    aire_max_gauche = diviserPourRegner(liste_triee_par_abscisse[:index_pivot], plan_x1, pivot[0], hauteur)  # On calcule l'aire maximale dans le plan de gauche
-    aire_max_droite = diviserPourRegner(liste_triee_par_abscisse[index_pivot + 1:], pivot[0], plan_x2, hauteur)  # On calcule l'aire maximale dans le plan de droite
-    aire_max = max(aire_max_gauche, aire_max_droite, (plan_x2 - plan_x1) * pivot[1])  # On calcule l'aire maximale
+    aire_max_gauche = diviserPourRegner(liste_triee_par_abscisse[:index_pivot], plan_x1, point_le_plus_bas[0], hauteur)  # On calcule l'aire maximale dans le plan de gauche
+    aire_max_droite = diviserPourRegner(liste_triee_par_abscisse[index_pivot + 1:], point_le_plus_bas[0], plan_x2, hauteur)  # On calcule l'aire maximale dans le plan de droite
+    aire_max = max(aire_max_gauche, aire_max_droite, (plan_x2 - plan_x1) * point_le_plus_bas[1])  # On calcule l'aire maximale
     return aire_max
 
 

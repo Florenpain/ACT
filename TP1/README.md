@@ -29,19 +29,28 @@ On va diviser le problème en deux sous-problèmes de taille n/2. On va donc cal
 
 ### l'algortihme en nlog(n) :
 
-- on détermine le point pivot (x, y) qui est le point le plus bas
-- on calcule l'aire formée par le point pivot et les extrémités du plan
-- on coupe verticalement le plan en deux au niveau du point piveau
-- on appelle récursivement la fonction sur les deux sous-plans
-- on retourne la surface maximale trouvée dans les sous-plans et la surface maximale trouvée en utilisant le point pivot
+- Si la liste est vide :
+    - on retourne l'aire formé par les extrémités du plan et la hauteur
+- On parcourt la liste pour déterminer le point le plus bas 
+- On récupère l'index du point le plus bas
+- On coupe verticalement le plan en deux parties au niveau du point le plus bas
+- On calcule la surface maximale pour la partie gauche
+- On calcule la surface maximale pour la partie droite
+- On calcule la surface maximale pour le plan en utilisant les deux sous-problèmes
+- On retourne la surface maximale
 
 ## Question 3 : Linéaire
 
-On utilise une pile pour stocker les points de la liste. 
-On parcourt la liste et on empile les points. 
-On dépile les points de la pile tant que le point courant est plus bas que le point au sommet de la pile. 
-On calcule alors la surface maximale formée par le point courant et le point au sommet de la pile. 
-On met à jour la surface maximale si nécessaire. On retourne la surface maximale.
-On va parcourir la liste de points et on va calculer la surface maximale en utilisant le point courant et le point précédent.
-On va mettre à jour le point le plus bas entre les deux points courants lors du parcours.
+- On utilise une pile et on stocke le premier point de la liste. 
+- On parcourt la liste :
+  - on calcule l'aire du rectangle formé par le point courant, le sommet de la pile, et la hauteur du plan.
+  - Si le point courant est plus haut que le sommet de la pile, on le met dans la pile
+  - Sinon, on dépile la pile tant que le point courant est plus bas que le sommet de la pile. 
+  - Pour chaque point dépiler, on calcule l'aire du rectangle formé par le point courant, le sommet de la pile, et le point dépilé. 
+  - On met à jour la surface maximale si nécessaire. On met ensuite le point courant dans la pile.
+- Tant qu'il y a des points dans la pile :
+  - on les dépiles et on calcule l'aire du rectangle formé par le point courant, le sommet de la pile, et le point dépilé. 
+  - On met à jour la surface maximale si nécessaire.
+- On retourne la surface maximale.
+
 
