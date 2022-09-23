@@ -3,7 +3,7 @@
 ## Question 1 : Une première approche 
 
 Un rectangle de surface maximale respectant les contraintes a nécessairement deux sommets de la forme (xi
-, 0),(xj , 0) avec 0 ≤ i < j ≤ n − 1 car un veut que l'un des côtés soit sur l'axe des abscisses.
+, 0),(xj , 0) avec 0 ≤ i < j ≤ n − 1 car on veut que l'un des côtés soit sur l'axe des abscisses.
 
 On a donc :
 
