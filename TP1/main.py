@@ -54,30 +54,40 @@ def n2(points, hauteur):
 
 
 def diviserPourRegner(liste_triee_par_abscisse, plan_x1, plan_x2, hauteur):
-    liste_triee_par_ordonnee = sorted(liste_triee_par_abscisse, key=lambda point: point[1])
-    largeur_plan = plan_x2 - plan_x1
-    (x1, y1) = liste_triee_par_ordonnee[0]  # point le plus bas
-    aire = largeur_plan * y1
-    index_pivot = liste_triee_par_abscisse.index((x1, y1))
-    aire_max_plan_gauche = 0
-    aire_max_plan_droit = 0
-    if len(liste_triee_par_abscisse[:index_pivot]) > 0:
-        aire_max_plan_gauche = diviserPourRegner(liste_triee_par_abscisse[:index_pivot], plan_x1, x1, hauteur)
-    if len(liste_triee_par_abscisse[index_pivot+1:]) > 0:
-        aire_max_plan_droit = diviserPourRegner(liste_triee_par_abscisse[index_pivot+1:], x1, plan_x2, hauteur)
-    return max(aire, aire_max_plan_gauche, aire_max_plan_droit)
+    if len(liste_triee_par_abscisse) == 0:  # Si la liste est vide
+        return (plan_x2 - plan_x1) * hauteur  # On retourne l'aire maximale
+    point_le_plus_bas = (0, hauteur)  # On initialise le point le plus bas à la hauteur du plan
+    for point in liste_triee_par_abscisse:  # On parcourt tous les points
+        if point[1] < point_le_plus_bas[1]:  # Si le point est plus bas que le point le plus bas
+            point_le_plus_bas = point  # On met à jour le point le plus bas
+    index_pivot = liste_triee_par_abscisse.index(point_le_plus_bas)  # On récupère l'index du point le plus bas
+    aire_max_gauche = diviserPourRegner(liste_triee_par_abscisse[:index_pivot], plan_x1, point_le_plus_bas[0],
+                                        hauteur)  # On calcule l'aire maximale dans le plan de gauche
+    aire_max_droite = diviserPourRegner(liste_triee_par_abscisse[index_pivot + 1:], point_le_plus_bas[0], plan_x2,
+                                        hauteur)  # On calcule l'aire maximale dans le plan de droite
+    aire_max = max(aire_max_gauche, aire_max_droite,
+                   (plan_x2 - plan_x1) * point_le_plus_bas[1])  # On calcule l'aire maximale
+    return aire_max
 
 
 def lineaire(points, hauteur):
-    pile = [points[0]]
-    aire = 0
-    for i in range(1, len(points)):
-        while len(pile) > 0 and pile[len(pile) - 1][1] > points[i][1]:
-            hauteur_min = pile.pop()[1]
-            if len(pile) > 0:
-                aire = max(aire, (points[i][0] - pile[len(pile) - 1][0]) * hauteur_min)
-        pile.append(points[i])
-    return aire
+    pile = [points[0]]  # On initialise la pile avec le premier point
+    aire = 0  # Aire maximale
+
+    for i in range(1, len(points)):  # On parcourt les points
+        aire = max(aire, (points[i][0] - pile[-1][0]) * hauteur)  # On calcule l'aire maximale
+        if points[i][1] >= pile[-1][1]:  # Si le point est plus haut que le dernier point de la pile
+            pile.append(points[i])  # On ajoute le point à la pile
+        else:
+            while len(pile) > 1 and points[i][1] < pile[-1][
+                1]:  # Tant que la pile contient plus d'un élément et que le point est plus bas que le dernier point de la pile
+                aire = max(aire, (points[i][0] - pile[-2][0]) * pile[-1][1])  # On calcule l'aire maximale
+                pile.pop()  # On retire le dernier point de la pile
+            pile.append(points[i])  # On ajoute le point à la pile
+    while len(pile) > 1:  # Tant que la pile contient plus d'un élément
+        aire = max(aire, (largeur - pile[-2][0]) * pile[-1][1])  # On calcule l'aire maximale
+        pile.pop()  # On retire le dernier point de la pile
+    return aire  # On affiche l'aire maximale
 
 
 if __name__ == '__main__':

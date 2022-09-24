@@ -10,7 +10,6 @@ def main():
 
 
 def diviserPourRegner(liste_triee_par_abscisse, plan_x1, plan_x2, hauteur):
-
     if len(liste_triee_par_abscisse) == 0: # Si la liste est vide
         return (plan_x2 - plan_x1) * hauteur  # On retourne l'aire maximale
     point_le_plus_bas = (0, hauteur)  # On initialise le point le plus bas à la hauteur du plan
