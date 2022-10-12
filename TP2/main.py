@@ -1,11 +1,16 @@
-from copy import deepcopy
+dictionnairePlateaux = {}
 
 hauteur = int(input())
 largeur = int(input())
 plateauBase = []
 for i in range(hauteur):
     plateauBase.append(list(input()))
-# print(plateauBase)
+
+def copier_plateau(plateau):
+    nouveauPlateau = []
+    for i in range(hauteur):
+        nouveauPlateau.append(plateau[i].copy())
+    return nouveauPlateau
 
 def pion_peut_avancer(plateau, x, y, joueurActuel):
     if joueurActuel == 'p' and x < hauteur - 1 and plateau[x+1][y] == ' ' and plateau[x][y] == 'p':
@@ -64,76 +69,63 @@ def calcul_successeurs(plateau, joueurActuel):
             return []
         for i in range(hauteur):
             if pion_peut_manger_gauche(plateau, i, j, joueurActuel):
-                nouveauPlateau = deepcopy(plateau)
+                nouveauPlateau = copier_plateau(plateau)
                 successeurs.append(manger_pion_gauche(nouveauPlateau, i, j, joueurActuel))
             if pion_peut_manger_droite(plateau, i, j, joueurActuel):
-                nouveauPlateau = deepcopy(plateau)
+                nouveauPlateau = copier_plateau(plateau)
                 successeurs.append(manger_pion_droite(nouveauPlateau, i, j, joueurActuel))
             if pion_peut_avancer(plateau, i, j, joueurActuel):
-                nouveauPlateau = deepcopy(plateau)
+                nouveauPlateau = copier_plateau(plateau)
                 successeurs.append(avancer_pion(nouveauPlateau, i, j, joueurActuel))
     return successeurs
 
 def hexapawn_naif(plateau, joueurActuel):
     successeurs = calcul_successeurs(plateau, joueurActuel)
-    maxPositif = 0
-    minNegatif = None
+    valeursPositives = []
+    valeursNegatives = []
     if len(successeurs) == 0:
         return 0
     for successeur in successeurs:
         valeur = hexapawn_naif(successeur, 'p' if joueurActuel == 'P' else 'P')
         # print(valeur)
-        if valeur > maxPositif:
-            maxPositif = valeur
-        elif minNegatif == None and valeur != 0:
-            minNegatif = valeur
-        elif minNegatif != None and valeur < 0 and valeur > minNegatif:
-            minNegatif = valeur
-    if minNegatif != None:
-        return -(minNegatif-1)
+        if valeur <= 0:
+            valeursNegatives.append(valeur)
+        else:
+            valeursPositives.append(valeur)
+    if len(valeursNegatives) > 0:
+        return -1*max(valeursNegatives)+1
     else:
-        if maxPositif == 0 and joueurActuel == 'p':
-            return -1
-        elif maxPositif == 0 and joueurActuel == 'P':
-            return 1
-        return -(maxPositif+1)
+        return -1*max(valeursPositives)-1
 
-def hexapawn_dynamique(plateau, joueurActuel, dictPlateaux):
-    if (str(plateau), joueurActuel) in dictPlateaux:
-        return dictPlateaux[(str(plateau), joueurActuel)]
+def hexapawn_dynamique(plateau, joueurActuel):
+    global dictionnairePlateaux
+
+    if (str(plateau), joueurActuel) in dictionnairePlateaux:
+        return dictionnairePlateaux[(str(plateau), joueurActuel)]
 
     successeurs = calcul_successeurs(plateau, joueurActuel)
-    maxPositif = 0
-    minNegatif = None
+    valeursPositives = []
+    valeursNegatives = []
 
     if len(successeurs) == 0:
         return 0
 
     for successeur in successeurs:
-        valeur = hexapawn_dynamique(successeur, 'p' if joueurActuel == 'P' else 'P', dictPlateaux)
+        valeur = hexapawn_dynamique(successeur, 'p' if joueurActuel == 'P' else 'P')
 
-        if valeur > maxPositif:
-            maxPositif = valeur
-        elif minNegatif == None and valeur != 0:
-            minNegatif = valeur
-        elif minNegatif != None and valeur < 0 and valeur > minNegatif:
-            minNegatif = valeur
-
-    if minNegatif != None:
-        dictPlateaux[(str(plateau), joueurActuel)] = -(minNegatif-1)
-        return -(minNegatif - 1)
-    else:
-        if maxPositif == 0 and joueurActuel == 'p':
-            dictPlateaux[(str(plateau), joueurActuel)] = -1
-            return -1
-        elif maxPositif == 0 and joueurActuel == 'P':
-            dictPlateaux[(str(plateau), joueurActuel)] = 1
-            return 1
+        if valeur <= 0:
+            valeursNegatives.append(valeur)
         else:
-            dictPlateaux[(str(plateau), joueurActuel)] = -(maxPositif+1)
-            return -(maxPositif + 1)
+            valeursPositives.append(valeur)
+
+    if valeursNegatives:
+        dictionnairePlateaux[(str(plateau), joueurActuel)] = -1*max(valeursNegatives)+1
+        return -1*max(valeursNegatives)+1
+    else:
+        dictionnairePlateaux[(str(plateau), joueurActuel)] = -1*max(valeursPositives)-1
+        return -1*max(valeursPositives)-1
 
 if __name__ == '__main__':
-    print(hexapawn_naif(plateauBase, 'P'))
-    # print(hexapawn_dynamique(plateauBase, 'P', dict()))
+    # print(hexapawn_naif(plateauBase, 'P'))
+    print(hexapawn_dynamique(plateauBase, 'P'))
 
