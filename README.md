@@ -27,3 +27,18 @@ possible de traiter rapidement des données de grande taille
 - [x] Question 2 : [Diviser pour régner](https://github.com/Florenpain/ACT/blob/main/TP1/diviserPourRegner.py)
 - [x] Question 3 : [Linéaire](https://github.com/Florenpain/ACT/blob/main/TP1/lineaire.py)
 ---------------------------------------
+
+### [TP2 : Hexapawn](https://github.com/Florenpain/ACT/tree/main/TP2)
+
+*[Lien du sujet](https://moodle.univ-lille.fr/pluginfile.php/2689929/mod_resource/content/1/hexapawn.pdf)*
+
+#### Résumé :
+
+L'objectif du TP est de concevoir et implémenter un algorithme récursif pour le jeu Hexapawn, 
+qui calcule le nombre de coup optimal pour gagner le plus vite possible, 
+ou perdre le plus tard possible quand la victoire n'est pas possible.
+
+- [x] Question 1 : Formule mathématique 
+- [x] Question 2 : Algorithme naïf
+- [x] Question 3 : algorithme dynamique 
+---------------------------------------

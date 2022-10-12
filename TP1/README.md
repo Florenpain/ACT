@@ -1,5 +1,17 @@
 # TP1 : Le plus grand Rectangle
 
+*[Lien du sujet](https://moodle.univ-lille.fr/pluginfile.php/2602491/mod_resource/content/3/TP_DivConquer_2022.pdf)*
+
+## Description des fichiers :
+
+- `main.py` : contient le code principal
+- `askTheUser.py` : contient la fonction `askTheUser` qui demande à l'utilisateur de saisir une liste de points, la hauteur et la largeur du plan
+- `diviserPourRegner.py` : contient la fonction `diviserPourRegner` qui calcule la surface maximale en utilisant l'algorithme en nlog(n)
+- `lineaire.py` : contient la fonction `lineaire` qui calcule la surface maximale en utilisant l'algorithme linéaire
+- `n3.py` : contient la fonction `n3` qui calcule la surface maximale en utilisant l'algorithme en n3
+- `n2.py` : contient la fonction `n2` qui calcule la surface maximale en utilisant l'algorithme en n2
+- `README.md` : contient la description du TP
+
 ## Question 1 : Une première approche 
 
 Un rectangle de surface maximale respectant les contraintes a nécessairement deux sommets de la forme (xi
@@ -52,5 +64,6 @@ On va diviser le problème en deux sous-problèmes de taille n/2. On va donc cal
   - on les dépiles et on calcule l'aire du rectangle formé par le point courant, le sommet de la pile, et le point dépilé. 
   - On met à jour la surface maximale si nécessaire.
 - On retourne la surface maximale.
+
 
 
