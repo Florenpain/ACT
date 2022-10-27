@@ -35,7 +35,7 @@ La taille est égal a n
     //on calcule la somme des poids par sac et
     //on vérifie que chaque objet appartient bien à un sac
     o= liste de de sac associé à 0 
-    Pour i allant de 0 à L-1
+    Pour i allant de 0 à n-1
         if L[i] != null // on vérifie queun sac est bien associé à chaque objet
             o[L[i]]+=x[L[i]]  on ajoute à la table associatif le poid de l'objet
      
@@ -59,24 +59,11 @@ k : le nombre de sacs
 L: liste taille n qui corrspond à un numéro de sac
 
 for i allant de 0 à n-1
-    L[i]=random([0:k[) // on attribut un sac aléatoire on considére que c est un tableau commencant par 0 donc 0 est inclu et k exclu
-
-
-
-
-
-
-
-Proposez un algorithme de génération aléatoire de certificat, i.e. qui prend en entrée une instance de BinPack,
-ou seulement le nombre d’objets et le nombre de sacs, et génère aléatoirement un certificat de façon à ce que
-chaque certificat ait une probabilité non nulle d’être généré.
-
-
-
+    L[i]=random([0:k[) // on attribut un sac aléatoire on considére que c est //un tableau commencant par 0 donc 0 est inclu et k exclu
 
 #### Votre algorithme génère-t-il de façon uniforme les certificats, i.e. tous les certificats ont-ils la même probabilité d’apparaître ?
 
-
+La génération de l'aléatoire vient de la fonction random, par exemple 
 
 
 
