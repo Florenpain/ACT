@@ -1,5 +1,9 @@
 # TP 3 - Les propriétés NP, les réductions polynomiales
 
+## Commandes utiles 
+
+python main.py data/exBPeq1_min3 5 verification
+
 ##  Qu’est-ce qu’une propriété NP ?
 
 Données:
