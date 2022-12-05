@@ -1,100 +1,101 @@
 import random
+import sys
 
-class BinPack:
-    def __init__(self, nb_objets, poids, capacite, nb_sacs):
-        self.nombre_objets = nb_objets
-        self.poids = poids
-        self.capacite = capacite
-        self.nombre_sacs = nb_sacs
 
-    def __str__(self):
-        return "Nombre d'objets: " + str(self.nombre_objets) + " Poids: " + str(self.poids) + " Capacite: " + str(self.capacite) + " Nombre de sacs: " + str(self.nombre_sacs) + " "
+def readBinPackFromFile(filepath):
+    with open(filepath, 'r', encoding='utf-8') as file:
+        capacite = int(file.readline())
+        nombre_objets = int(file.readline())
+        poids = []
+        for i in range(nombre_objets):
+            poids.append(int(file.readline()))
+        return capacite, nombre_objets, poids
 
-    def aUneSolution(self):
-        certificats = self.generationTousLesCertificats()
-        for i in range(len(certificats)):
-            if self.verificationCertificat(certificats[i]):
-                return True
+
+def verificationCertificat(nombre_objets, nombre_sacs, capacite, poids, certificat):
+
+    poids_sacs = {}
+
+    for i in range(nombre_objets):
+        if certificat[i] in poids_sacs:
+            poids_sacs[certificat[i]] += poids[i]
+        else:
+            poids_sacs[certificat[i]] = poids[i]
+
+    if len(poids_sacs) > nombre_sacs:
         return False
 
-    def aUneSolutionNonDeterministe(self):
-        certificat = self.generationCertificatAleatoire()
-        return self.verificationCertificat(certificat)
-
-    def verificationCertificat(self, certificat):
-
-        # On vérifie que le certificat est une liste de listes
-        if not isinstance(certificat, list):
+    for sac in poids_sacs:
+        if poids_sacs[sac] > capacite:
             return False
-        for i in range(len(certificat)):
-            if not isinstance(certificat[i], list):
-                return False
+    return True
 
-        # On vérifie que le certificat contient le bon nombre de sacs
-        if len(certificat) != self.nombre_sacs:
+
+def generationCertificatAleatoire(nombre_objets, nombre_sacs):
+    certificat = []
+    for i in range(nombre_objets):
+        certificat.append(random.randint(0, nombre_sacs - 1))
+    return certificat
+
+
+def aUneSolutionNonDeterministe(nombre_objets, nombre_sacs, capacite, poids):
+    certificat = generationCertificatAleatoire(nombre_objets, nombre_sacs)
+    return verificationCertificat(nombre_objets, nombre_sacs, capacite, poids, certificat), certificat
+
+
+def generationCertificatSuccessif(nombre_objets, nombre_sacs, certificat):
+    if certificat == None:
+        certificat = [0] * nombre_objets
+    else:
+        certificat = certificat.copy()
+        i = 0
+        while i < nombre_objets and certificat[i] == nombre_sacs - 1:
+            certificat[i] = 0
+            i += 1
+        if i == nombre_objets:
+            return None
+        certificat[i] += 1
+    return certificat
+
+
+def aUneSolution(nombre_objets, nombre_sacs, capacite, poids):
+    certificat = None
+    while True:
+        certificat = generationCertificatSuccessif(nombre_objets, nombre_sacs, certificat)
+        if certificat == None:
             return False
-
-        # On vérifie que le certificat contient le bon nombre d'objets
-        nb_objets = 0
-        for i in range(len(certificat)):
-            nb_objets += len(certificat[i])
-        if nb_objets != self.nombre_objets:
-            return False
-
-        # On vérifie que le certificat contient bien tous les objets
-        objets = []
-        for i in range(len(certificat)):
-            for j in range(len(certificat[i])):
-                objets.append(certificat[i][j])
-        objets.sort()
-        for i in range(self.nombre_objets):
-            if objets[i] != i:
-                return False
-
-        # On vérifie que le certificat respecte la capacité des sacs
-        for i in range(len(certificat)):
-            poids_utilise = 0
-            for j in range(len(certificat[i])):
-                poids_utilise += self.poids[certificat[i][j]]
-            if poids_utilise > self.capacite:
-                return False
-
-        return True
+        if verificationCertificat(nombre_objets, nombre_sacs, capacite, poids, certificat):
+            return True
 
 
-    def generationCertificatAleatoire(self):
-        certificat = []
-        for i in range(self.nombre_sacs):
-            certificat.append([])
-        for i in range(self.nombre_objets):
-            certificat[random.randint(0, self.nombre_sacs - 1)].append(i)
-        return certificat
+if __name__ == '__main__':
+    if len(sys.argv) != 4:
+        print("Usage: python3 BinPack.py <filename> <type> <nombre_sacs>")
+        exit(1)
 
-    def generationTousLesCertificats(self):
-        certificats = []
-        certificat = []
-        for i in range(self.nombre_sacs):
-            certificat.append([])
-        for i in range(self.nombre_objets):
-            certificat[0].append(i)
-        certificats.append(certificat)
-        while not self.certificatDernier(certificat):
-            certificat = self.certificatSuivant(certificat)
-            certificats.append(certificat)
-        return certificats
+    filepath = sys.argv[1]
+    mode = sys.argv[2]
+    nombre_sacs = int(sys.argv[3])
+    capacite, nombre_objets, poids = readBinPackFromFile(filepath)
 
-    def certificatSuivant(self, certificat):
-        for i in range(len(certificat)):
-            if len(certificat[i]) > 0:
-                certificat[i].pop()
-                if i < len(certificat) - 1:
-                    certificat[i + 1].append(certificat[i][0])
-                    certificat[i].pop(0)
-                else:
-                    certificat[0].append(certificat[i][0])
-                    certificat[i].pop(0)
-                break
-        return certificat
+    if mode == 'ver':
+        certificat = input("Entrez le certificat sous la forme d'une liste de nombres: ")
+        if verificationCertificat(nombre_objets, nombre_sacs, capacite, poids, certificat):
+            print("Le certificat est valide")
+        else:
+            print("Le certificat est faux")
 
-    def certificatDernier(self, certificat):
-        return len(certificat[len(certificat) - 1]) == self.nombre_objets
+    elif mode == 'nd':
+        boolTest, certificat = aUneSolutionNonDeterministe(nombre_objets, nombre_sacs, capacite, poids)
+        if boolTest:
+            print("Le certificat généré aléatoirement " + certificat.__str__() + " est valide")
+        else:
+            print("Le certificat généré aléatoirement " + certificat.__str__() + " est faux")
+
+    elif mode == 'exh':
+        if aUneSolution(nombre_objets, nombre_sacs, capacite, poids):
+            print('Une solution à été trouvé')
+        else:
+            print('pas de solution possible')
+    else:
+        print("Erreur lors de la saisie du mode")
