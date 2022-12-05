@@ -11,12 +11,9 @@ def readBinPackFromFile(file, nombre_sacs):
         poids_objets.append(int(file.readline()))
     return BinPack.BinPack(nombre_objets, poids_objets, capacite, nombre_sacs)
 
-def askForCertificat(binPackProblem):
+def askForCertificat():
     print("Entrez un certificat (sous la forme d'une liste de listes):")
-    answer = input()
-    certificat = Certificat.Certificat(binPackProblem)
-    certificat.setSolution(eval(answer))
-    return certificat
+    return input()
 
 def main(filepath, nombre_sacs, methode):
 
@@ -27,8 +24,8 @@ def main(filepath, nombre_sacs, methode):
 
     if methode == "verification":
         print("Verification")
-        certificat = askForCertificat(binPackProblem)
-        print(certificat.estCorrect())
+        certificat = askForCertificat()
+        print(binPackProblem.verificationCertificat(certificat))
     elif methode == "non-deterministe":
         print("Non deterministe")
         print(binPackProblem.aUneSolutionNonDeterministe())
