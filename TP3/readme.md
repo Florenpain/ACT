@@ -1,4 +1,4 @@
-# TP 3 - Les propriétés NP, les réductions polynomiales
+# TP 3 - BinPack
 
 ## 1 - Qu’est-ce qu’une propriété NP ?
 
@@ -34,7 +34,7 @@ def verificationCertificat(nombre_objets, nombre_sacs, capacite, poids, certific
     return True
 ```
 
-L'algorithme de vérification est polynomial car il parcourt les éléments du certificat et les poids des objets, et effectue des opérations élémentaires.
+L'algorithme de vérification est polynomial, car il parcourt les éléments du certificat et les poids des objets, et effectue des opérations élémentaires.
 
 ### Question 2 : NP = Non déterministe polynomial
 
