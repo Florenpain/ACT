@@ -1,9 +1,5 @@
 # TP 3 - Les propriétés NP, les réductions polynomiales
 
-## Commandes utiles 
-
-python main.py data/exBPeq1_min3 5 verification
-
 ## 1 - Qu’est-ce qu’une propriété NP ?
 
 ### Question 1 : La propriété est NP
@@ -54,6 +50,7 @@ def generationCertificatAleatoire(nombre_objets, nombre_sacs):
 
 #### Votre algorithme génère-t-il de façon uniforme les certificats, i.e. tous les certificats ont-ils la même probabilité d’apparaître ?
 Notre algorithme génère un certificat de manière uniforme les certificats, c'est-à-dire que chaque certificat a la même probabilité d'être généré.
+
 Effectivement, le sac attribué à un objet est choisi de façon aléatoire et chaque sac a la même probabilité d'être choisi.
 
 #### Q 2.2. Quel serait le schéma d’un algorithme non déterministe polynomial pour le problème ?
@@ -66,7 +63,9 @@ Un certificat peut prendre k**n valeurs. En effet, pour chaque objet, il y a k s
 
 #### Q 3.2. Enumération de tous les certificats. Quel ordre proposez-vous pour parcourir tous les certificats ?
 Le premier certificat sera celui où tous les objets sont dans le premier sac, le dernier certificat sera celui où tous les objets sont dans le dernier sac.
+
 Entre temps on peut parcourir tous les certificats en incrémentant le certificat précédent.
+
 Par exemple, si on a 3 objets et 2 sacs, on aura les certificats suivants :
 - [0, 0, 0]
 - [1, 0, 0]
@@ -79,6 +78,7 @@ Par exemple, si on a 3 objets et 2 sacs, on aura les certificats suivants :
 
 #### Q 3.3. L'algorithme du British Museum : Comment déduire de ce qui précède un algorithme pour tester si le problème a une solution ? Quelle complexité a cet algorithme ?
 On peut déduire de ce qui précède un algorithme pour tester si le problème a une solution en parcourant tous les certificats et en vérifiant si un certificat est valide.
+
 Cet algorithme a une complexité de O(k**n).
 
 ### Question 4 : Implémentation 
@@ -89,6 +89,7 @@ cf BinPack.py
 ### Question 1 : Montrer que Partition se réduit polynomialement en BinPack.
 
 On cherche une fonction de réduction permettant de résoudre le problème Partition en un problème BinPack.
+
 Pour cela, il faut adapter les données du problème Partition pour qu'elles soient compatibles et utilisables avec le problème BinPack.
     
 | Partition                                                                          | BinPack                                  |
@@ -119,11 +120,13 @@ On ne pense pas que BinPack se réduise polynomialement dans Partition, car on n
 
 ### Question 2 : Entre Sum et Partition, lequel des deux problèmes peut être presque vu comme un cas particulier de l’autre ? Qu’en déduire en termes de réduction ?
 Sum peut être vu comme un cas particulier de Partition, car on cherche à savoir s'il existe un sous-ensemble de poids égal à la moitié de la somme des objets.
+
 Il suffit de modifier un peu les données pour que la cible recherchée dans Sum correspondent à la moitié de la somme des objets dans Partition.
 
 ### Question 3 : Montrer que Sum se réduit polynomialement en Partition.
 
 On cherche une fonction de réduction permettant de résoudre le problème Sum en un problème Partition.
+
 Pour cela, il faut adapter les données du problème Sum pour qu'elles soient compatibles et utilisables avec le problème Partition.
 
 | Sum                                                                   | Partition                        |
@@ -142,6 +145,7 @@ Résoudre le problème Sum revient à résoudre le problème Partition suivant :
 ### Question 4 : En utilisant la réduction précédente, comment implémenter une réduction polynomiale de Sum dans BinPack ?
 
 On cherche une fonction de réduction permettant de résoudre le problème Sum en un problème BinPack.
+
 Pour cela, il faut adapter les données du problème Sum pour qu'elles soient compatibles et utilisables avec le problème BinPack.
 
 | Sum                                                                   | BinPack                                  |
@@ -159,6 +163,7 @@ Résoudre le problème Sum revient à résoudre le problème BinPack suivant :
 ### Question 5 : Proposer une réduction polynomiale de BinPackDiff dans BinPack (inutile de l’implémenter)
 
 On cherche une fonction de réduction permettant de résoudre le problème BinPackDiff en un problème BinPack.
+
 Pour cela, il faut adapter les données du problème BinPackDiff pour qu'elles soient compatibles et utilisables avec le problème BinPack.
 
 | BinPackDiff                                                   | BinPack                                  |
@@ -179,13 +184,17 @@ Résoudre le problème BinPackDiff revient à résoudre le problème BinPack sui
 ### Question 1 : Montrer que si BinPackOpt1 (resp. BinPackOpt2) était P, la propriété BinPack le serait aussi ; qu’en déduire pour BinPackOpt1 (resp. BinPackOpt2) ?
 
 Si BinPackOpt1 (resp. BinPackOpt2) était P, cela impliquerait qu'il existe un algorithme polynomial qui résout le problème BinPackOpt1 (resp. BinPackOpt2).
+
 On sait que pour résoudre BinPackOpt1 (resp. BinPackOpt2), il faut :
 - Calculer un ordonnancement correct
 - Trouver l'ordonnancement avec le plus petit résultat
 
 On remarque ici que, lors du calcul de BinPackOpt1 (resp. BinPackOpt2), on calcule BinPack également.
+
 La complexité de BinPack est donc inférieure ou égale à celle de BinPackOpt1 (resp. BinPackOpt2).
+
 Or, on sait que BinPackOpt1 se résout en un temps polynomial.
+
 Ainsi : Si BinPackOpt1 (resp. BinPackOpt2) était P, la propriété BinPack le serait aussi.
 
 ### Question 2 : Montrer que si la propriété BinPack était P, BinPackOpt1 le serait aussi
