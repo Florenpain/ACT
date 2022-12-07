@@ -53,7 +53,7 @@ Notre algorithme génère un certificat de manière uniforme les certificats, c'
 
 Effectivement, le sac attribué à un objet est choisi de façon aléatoire et chaque sac a la même probabilité d'être choisi.
 
-$$ \frac {1}{n ^ k} $$
+$$ \frac {1}{k ^ n} $$
 
 #### Q 2.2. Quel serait le schéma d’un algorithme non déterministe polynomial pour le problème ?
 On peut utiliser un algorithme non déterministe polynomial pour le problème en générant un certificat aléatoire, et en vérifiant si ce certificat est valide.
@@ -145,6 +145,7 @@ Résoudre le problème Sum revient à résoudre le problème Partition suivant :
 :warning: On a ajouté une valeur à la liste des entiers pour que la somme des entiers soit égale à 2*cible.
 
 valeur ajoutée:
+
 $$ 2\times c - \sum_{i=1}^{n}(xi) $$
 
 ### Question 4 : En utilisant la réduction précédente, comment implémenter une réduction polynomiale de Sum dans BinPack ?
