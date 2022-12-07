@@ -215,3 +215,7 @@ est notre nombre de sachets minimum.
 
 ### Question 3 : Montrer que si la propriété BinPack était P, BinPackOpt2 le serait aussi
 
+Nous avons vu ci-dessus que si Binpack est P, nous avons le nombre minimum de sachets.  
+Or, si nous avons notre nombre minimum de sachets, 
+il n'y a plus qu'un trouver un certificat valide avec le nombre de sachets minimal pour avoir la mise en sachets correcte qui minimise le nombre de sachets.
+
