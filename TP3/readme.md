@@ -8,10 +8,10 @@
 Le certificat correspond à un ensemble d'objet pour chaque sac
 
 #### Comment pensez-vous l’implémenter ?
-On peut représenter le certificat par une liste, chaque élément de la liste correspond à un sac, pour l'objet du même index dans la liste d'objets.
+On peut représenter le certificat par une liste, chaque élément de la liste correspond à un numéro de sac, pour l'objet du même index dans la liste d'objets.
 
 #### Quelle sera la taille d’un certificat ?
-La taille d'un certificat sera égale au nombre d'objets présents dans le problème.
+La taille d'un certificat sera égale au nombre d'objets présents (n) dans le problème.
 
 #### La taille des certificats est-elle bien bornée polynomialement par rapport à la taille de l’entrée ?
 Oui, la taille des certificats est bien bornée polynomialement par rapport à la taille de l'entrée.
@@ -52,6 +52,8 @@ def generationCertificatAleatoire(nombre_objets, nombre_sacs):
 Notre algorithme génère un certificat de manière uniforme les certificats, c'est-à-dire que chaque certificat a la même probabilité d'être généré.
 
 Effectivement, le sac attribué à un objet est choisi de façon aléatoire et chaque sac a la même probabilité d'être choisi.
+
+$$ \frac {1}{n ^ k} $$
 
 #### Q 2.2. Quel serait le schéma d’un algorithme non déterministe polynomial pour le problème ?
 On peut utiliser un algorithme non déterministe polynomial pour le problème en générant un certificat aléatoire, et en vérifiant si ce certificat est valide.
@@ -142,6 +144,9 @@ Résoudre le problème Sum revient à résoudre le problème Partition suivant :
 
 :warning: On a ajouté une valeur à la liste des entiers pour que la somme des entiers soit égale à 2*cible.
 
+valeur ajoutée:
+$$ 2\times c - \sum_{i=1}^{n}(xi) $$
+
 ### Question 4 : En utilisant la réduction précédente, comment implémenter une réduction polynomiale de Sum dans BinPack ?
 
 On cherche une fonction de réduction permettant de résoudre le problème Sum en un problème BinPack.
@@ -185,10 +190,6 @@ Résoudre le problème BinPackDiff revient à résoudre le problème BinPack sui
 
 Si BinPackOpt1 (resp. BinPackOpt2) était P, cela impliquerait qu'il existe un algorithme polynomial qui résout le problème BinPackOpt1 (resp. BinPackOpt2).
 
-On sait que pour résoudre BinPackOpt1 (resp. BinPackOpt2), il faut :
-- Calculer un ordonnancement correct
-- Trouver l'ordonnancement avec le plus petit résultat
-
 On remarque ici que, lors du calcul de BinPackOpt1 (resp. BinPackOpt2), on calcule BinPack également.
 
 La complexité de BinPack est donc inférieure ou égale à celle de BinPackOpt1 (resp. BinPackOpt2).
@@ -197,8 +198,19 @@ Or, on sait que BinPackOpt1 se résout en un temps polynomial.
 
 Ainsi : Si BinPackOpt1 (resp. BinPackOpt2) était P, la propriété BinPack le serait aussi.
 
+De plus, 
+Si BinpackOpt2 est P, 
+Binpack est P également, car BinPackOpt2 nous fourni directement une mise en sacs correcte optimale,
+c'est donc le certificat valide pour BinPack.
+
 ### Question 2 : Montrer que si la propriété BinPack était P, BinPackOpt1 le serait aussi
 
+Si Binpack est P, 
+BinPackOpt1 l'est également, 
+car nous pouvons faire une boucle qui prend une variable (nombre de sacs) 
+et l'incrémente à chaque itération pour le donner en paramètre à Binpack jusqu'à ce qu'on obtienne une mise en sachets valide. 
+La valeur de la variable pour laquelle nous aurions notre première mise en sachets valide, 
+est notre nombre de sachets minimum.
 
 ### Question 3 : Montrer que si la propriété BinPack était P, BinPackOpt2 le serait aussi
 
