@@ -13,6 +13,7 @@ def read_file(filepath):
         return taches
 
 
+# Calcule la somme de tous les retards
 def evaluation(ordonnancement):
     somme_retards = 0
     for element in ordonnancement:
@@ -20,26 +21,26 @@ def evaluation(ordonnancement):
     return somme_retards
 
 
-def ordonnancement_aleatoire(taches):
-    ordonnancement = copy.deepcopy(taches)
-    random.shuffle(ordonnancement)
-
+# Met à jour le retard de chaque tâche selon l'ordonnancement
+def calcul_retard_tache(ordonnancement):
     temps = 0
     for element in ordonnancement:
         temps += element["temps execution"]
         element["temps completion"] = temps
         element["retard"] = max(0, (element["temps completion"] - element["date limite"]))
+    return ordonnancement
 
+
+def ordonnancement_aleatoire(taches):
+    ordonnancement = copy.deepcopy(taches)
+    random.shuffle(ordonnancement)
+    ordonnancement = calcul_retard_tache(ordonnancement)
     return ordonnancement
 
 def heuristiqueLimite(taches):
     ordonnancement = copy.deepcopy(taches)
-    ordonnancement=sorted(ordonnancement, key=lambda tache: tache["date limite"])
-    temps = 0
-    for element in ordonnancement:
-        temps += element["temps execution"]
-        element["temps completion"] = temps
-        element["retard"] = max(0, (element["temps completion"] - element["date limite"]))
+    ordonnancement = sorted(ordonnancement, key=lambda tache: tache["date limite"])
+    ordonnancement = calcul_retard_tache(ordonnancement)
     return ordonnancement
 
 def heuristiqueLimiteSurPoids(taches):
@@ -56,12 +57,7 @@ def heuristiqueLimiteSurPoids(taches):
         ordonnancement += nouvelle_tache
         for element in buffer:
             ordonnancement += element
-
-    temps = 0
-    for element in ordonnancement:
-        temps += element["temps execution"]
-        element["temps completion"] = temps
-        element["retard"] = max(0, (element["temps completion"] - element["date limite"]))
+    ordonnancement = calcul_retard_tache(ordonnancement)
     return ordonnancement
 
 def HillClimbing(ordonnancement):
@@ -73,26 +69,28 @@ def HillClimbing(ordonnancement):
                 buffer = ordonnancement[jndex]
                 new_ordo[jndex] = new_ordo[index]
                 new_ordo[index] = buffer
-
-    temps = 0
-    for element in new_ordo:
-        temps += element["temps execution"]
-        element["temps completion"] = temps
-        element["retard"] = max(0, (element["temps completion"] - element["date limite"]))
+    new_ordo = calcul_retard_tache(new_ordo)
     return new_ordo
 
 def ils(ordonnancement, limite_iteration):
     new_ordo = HillClimbing(ordonnancement)
-    resultFind = False
 
     for i in range(0, limite_iteration):
-        while not resultFind:
-            if evaluation(ordonnancement) == evaluation(new_ordo):
-                resultFind = True
 
-    # Perturbation
+        # Perturbation
+        random_int = random.random(0, len(ordonnancement))
+        random_int2 = random.random(0, len(ordonnancement))
+        ordonnancement[random_int], ordonnancement[random_int2] = ordonnancement[random_int2], ordonnancement[random_int]
+        ordonnancement= calcul_retard_tache(ordonnancement)
 
-    return 'idk'
+        #HillClimbing
+        new_ordo_bis = HillClimbing(ordonnancement)
+
+        #Evaluation et mise à jour si besoin
+        if evaluation(new_ordo_bis) < evaluation(new_ordo):
+            new_ordo = new_ordo_bis
+
+    return new_ordo
 
 
 
