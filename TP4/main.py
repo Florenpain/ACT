@@ -112,3 +112,7 @@ if __name__ == "__main__":
     somme_retards_hillClimbing = evaluation(ordo_hillClimbing)
     print("retard pour Hill Climbing : " + str(somme_retards_hillClimbing))
 
+    ordo_ils = ils(heuristiqueLimiteSurPoids, 5)
+    somme_retards_ils = evaluation(ordo_ils)
+    print("retard pour ILS : " + str(somme_retards_ils))
+
