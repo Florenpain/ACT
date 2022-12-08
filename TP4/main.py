@@ -61,14 +61,12 @@ def heuristiqueLimiteSurPoids(taches):
     return ordonnancement
 
 def HillClimbing(ordonnancement):
-    # TODO: gérer problème d'adresse mémoire
+    # Attention au problème de stockage mémoire
     new_ordo = copy.deepcopy(ordonnancement)
     for index in range(0,len(new_ordo)):
         for jndex in range(index, len(new_ordo)):
             if new_ordo[jndex]["retard"] > 0: # variante avec new_ordo[jndex]["retard"] > new_ordo[index]["retard"]
-                buffer = ordonnancement[jndex]
-                new_ordo[jndex] = new_ordo[index]
-                new_ordo[index] = buffer
+                new_ordo[jndex], new_ordo[index] = new_ordo[index], new_ordo[jndex]
     new_ordo = calcul_retard_tache(new_ordo)
     return new_ordo
 
@@ -81,7 +79,7 @@ def ils(ordonnancement, limite_iteration):
         random_int = random.random(0, len(ordonnancement))
         random_int2 = random.random(0, len(ordonnancement))
         ordonnancement[random_int], ordonnancement[random_int2] = ordonnancement[random_int2], ordonnancement[random_int]
-        ordonnancement= calcul_retard_tache(ordonnancement)
+        ordonnancement = calcul_retard_tache(ordonnancement)
 
         #HillClimbing
         new_ordo_bis = HillClimbing(ordonnancement)
