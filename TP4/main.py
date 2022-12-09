@@ -45,18 +45,19 @@ def heuristiqueLimite(taches):
 
 def heuristiqueLimiteSurPoids(taches):
     ordonnancement = [] # on utilise une pile
+    # ordonnancement = sorted(ordonnancement, key=lambda tache: tache["date limite"]/ tache["poids"])
     for tache in taches:
         nouvelle_tache = copy.deepcopy(tache)
         buffer = []
         while len(ordonnancement) > 0:
             dernier_element = ordonnancement[len(ordonnancement)-1]
             if (tache["date limite"] / tache["poids"]) < (dernier_element["date limite"] / dernier_element["poids"]):
-                buffer += ordonnancement.pop()
+                buffer += [ordonnancement.pop()]
             else:
                 break
-        ordonnancement += nouvelle_tache
+        ordonnancement += [nouvelle_tache]
         for element in buffer:
-            ordonnancement += element
+            ordonnancement += [element]
     ordonnancement = calcul_retard_tache(ordonnancement)
     return ordonnancement
 
@@ -76,8 +77,8 @@ def ils(ordonnancement, limite_iteration):
     for i in range(0, limite_iteration):
 
         # Perturbation
-        random_int = random.random(0, len(ordonnancement))
-        random_int2 = random.random(0, len(ordonnancement))
+        random_int = random.randint(0, len(ordonnancement))
+        random_int2 = random.randint(0, len(ordonnancement))
         ordonnancement[random_int], ordonnancement[random_int2] = ordonnancement[random_int2], ordonnancement[random_int]
         ordonnancement = calcul_retard_tache(ordonnancement)
 

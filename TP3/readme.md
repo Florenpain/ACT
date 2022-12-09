@@ -61,7 +61,7 @@ On peut utiliser un algorithme non déterministe polynomial pour le problème en
 ### Question 3 : NP ⊂ EXPTIME
 
 #### Q 3.1. Pour n et k fixés, combien de valeurs peut prendre un certificat ?
-Un certificat peut prendre k**n valeurs. En effet, pour chaque objet, il y a k sacs possibles.
+Un certificat peut prendre k^n valeurs. En effet, pour chaque objet, il y a k sacs possibles.
 
 #### Q 3.2. Enumération de tous les certificats. Quel ordre proposez-vous pour parcourir tous les certificats ?
 Le premier certificat sera celui où tous les objets sont dans le premier sac, le dernier certificat sera celui où tous les objets sont dans le dernier sac.
@@ -121,7 +121,7 @@ La propriété Partition est connue NP−complète, donc BinPack est NP−compl�
 On ne pense pas que BinPack se réduise polynomialement dans Partition, car on ne peut pas adapter les données du problème BinPack pour qu'elles soient compatibles et utilisables avec le problème Partition.
 
 ### Question 2 : Entre Sum et Partition, lequel des deux problèmes peut être presque vu comme un cas particulier de l’autre ? Qu’en déduire en termes de réduction ?
-Sum peut être vu comme un cas particulier de Partition, car on cherche à savoir s'il existe un sous-ensemble de poids égal à la moitié de la somme des objets.
+Partition peut être vu comme un cas particulier de Sum, car on cherche à savoir s'il existe un sous-ensemble de poids égal à la cible donnée en paramètre.
 
 Il suffit de modifier un peu les données pour que la cible recherchée dans Sum correspondent à la moitié de la somme des objets dans Partition.
 
@@ -135,7 +135,7 @@ Pour cela, il faut adapter les données du problème Sum pour qu'elles soient co
 |-----------------------------------------------------------------------|----------------------------------|
 | n -> nombre d'entiers                                                 | n -> nombre d'entiers            |
 | [x1, x2, ..., xn] + [2*cible - somme(x1, x2, ..., xn)] -> les entiers | [x1, x2, ..., xn] -> les entiers |
-| cible -> un entier cible                                              | None -> Undefined                |
+| cible -> un entier cible                                              | (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2])                |
 
 Résoudre le problème Sum revient à résoudre le problème Partition suivant :
 - On cherche à savoir s'il existe un sous-ensemble de poids égal à la moitié de la somme des objets.
@@ -176,8 +176,7 @@ Pour cela, il faut adapter les données du problème BinPackDiff pour qu'elles s
 |---------------------------------------------------------------|------------------------------------------|
 | n -> nombre d'objets                                          | n -> nombre d'objets                     |
 | [x1, x2, ..., xn] -> le poids des objets                      | [x1, x2, ..., xn] -> le poids des objets |
-| k -> nombre de sacs                                           | k -> nombre de sacs                      |
-| [c1, c2, ..., ck] -> les capacités des sacs                   | None -> Undefined                        |
+| k -> nombre de sacs                                           | k -> nombre de sacs                      |                        
 | min([c1, c2, ..., ck]) -> le sac avec la plus petite capacité | c -> capactité d'un sac                  |
 
 Résoudre le problème BinPackDiff revient à résoudre le problème BinPack suivant :

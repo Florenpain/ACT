@@ -1,0 +1,31 @@
+8
+5
+2
+5
+7
+3
+1
+
+
+
+//********************************************/
+Syntaxe 
+c, la capacité du sac
+n, le nb d'objets
+x1
+x2
+.
+.
+.
+xn, les poids
+
+
+5 objets: 2 5 7 3 1
+pour 3 sacs de capacité  8
+ 
+une solution (la premiere ds l'ordre lexico):
+objet 0 dans sac 0
+objet 1 dans sac 0
+objet 2 dans sac 1
+objet 3 dans sac 2
+objet 4 dans sac 0
