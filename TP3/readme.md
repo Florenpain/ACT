@@ -81,7 +81,7 @@ Par exemple, si on a 3 objets et 2 sacs, on aura les certificats suivants :
 #### Q 3.3. L'algorithme du British Museum : Comment déduire de ce qui précède un algorithme pour tester si le problème a une solution ? Quelle complexité a cet algorithme ?
 On peut déduire de ce qui précède un algorithme pour tester si le problème a une solution en parcourant tous les certificats et en vérifiant si un certificat est valide.
 
-Cet algorithme a une complexité de O(k**n).
+Cet algorithme a une complexité de O(k^n).
 
 ### Question 4 : Implémentation 
 cf BinPack.py

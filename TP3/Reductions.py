@@ -28,7 +28,7 @@ def partition(nombre_objets, poids):
 
 def sum(nombre_objets, poids, cible):
     poids += [2*cible - sum(poids)]
-    return partition(nombre_objets, poids)
+    return partition(nombre_objets+1, poids)
 
 
 if __name__ == '__main__':
