@@ -94,17 +94,22 @@ On cherche une fonction de réduction permettant de résoudre le problème Parti
 
 Pour cela, il faut adapter les données du problème Partition pour qu'elles soient compatibles et utilisables avec le problème BinPack.
     
-| Partition                                                                          | BinPack                                  |
-|------------------------------------------------------------------------------------|------------------------------------------|
-| n -> un nombre d'entiers                                                           | n -> nombre d'objets                     |
-| 2 -> nombre de sacs                                                                | k -> nombre de sacs                      |
-| (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2]) -> la moitié de la somme des xi | c -> capactité d'un sac                  |
-| [x1, x2, ..., xn] -> les entiers                                                   | [x1, x2, ..., xn] -> le poids des objets |
+| Partition                        | BinPack                                                                  |
+|----------------------------------|--------------------------------------------------------------------------|
+| n -> un nombre d'entiers         | n -> nombre d'objets                                                     |
+| None                             | 2 -> nombre de sacs                                                      |
+| None                             | (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2]) -> capactité d'un sac |
+| [x1, x2, ..., xn] -> les entiers | [x1, x2, ..., xn] -> le poids des objets                                 |
 
 Résoudre le problème Partition revient à résoudre le problème BinPack suivant :
 - On cherche à savoir s'il existe un sac de capacité égale à la moitié de la somme des objets.
 - Si oui, alors il existe une partition des objets en deux groupes de poids égaux.
 - Sinon, alors il n'existe pas de partition des objets en deux groupes de poids égaux.
+
+S'il existe une solution au problème BinPack, alors il existe une solution au problème Partition.
+L'inverse et la négative sont vrais également.
+
+La réduction est donc polynomiale, car la résolution de BinPack est polynomiale.
 
 #### Q 1.1. Implémenter la réduction polynomiale de Partition dans BinPack
     
@@ -121,7 +126,7 @@ La propriété Partition est connue NP−complète, donc BinPack est NP−compl�
 On ne pense pas que BinPack se réduise polynomialement dans Partition, car on ne peut pas adapter les données du problème BinPack pour qu'elles soient compatibles et utilisables avec le problème Partition.
 
 ### Question 2 : Entre Sum et Partition, lequel des deux problèmes peut être presque vu comme un cas particulier de l’autre ? Qu’en déduire en termes de réduction ?
-Partition peut être vu comme un cas particulier de Sum, car on cherche à savoir s'il existe un sous-ensemble de poids égal à la cible donnée en paramètre.
+Partition peut être vue comme un cas particulier de Sum, car on cherche à savoir s'il existe un sous-ensemble de poids égal à la cible donnée en paramètre.
 
 Il suffit de modifier un peu les données pour que la cible recherchée dans Sum correspondent à la moitié de la somme des objets dans Partition.
 
@@ -131,20 +136,25 @@ On cherche une fonction de réduction permettant de résoudre le problème Sum e
 
 Pour cela, il faut adapter les données du problème Sum pour qu'elles soient compatibles et utilisables avec le problème Partition.
 
-| Sum                                                                   | Partition                        |
-|-----------------------------------------------------------------------|----------------------------------|
-| n -> nombre d'entiers                                                 | n -> nombre d'entiers            |
-| [x1, x2, ..., xn] + [2*cible - somme(x1, x2, ..., xn)] -> les entiers | [x1, x2, ..., xn] -> les entiers |
-| cible -> un entier cible                                              | (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2])                |
+| Sum                              | Partition                                                             |
+|----------------------------------|-----------------------------------------------------------------------|
+| n -> nombre d'entiers            | n -> nombre d'entiers                                                 |
+| [x1, x2, ..., xn] -> les entiers | [x1, x2, ..., xn] + [2*cible - somme(x1, x2, ..., xn)] -> les entiers |
+| cible -> un entier cible         | (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2]) -> la cible        |
 
 Résoudre le problème Sum revient à résoudre le problème Partition suivant :
 - On cherche à savoir s'il existe un sous-ensemble de poids égal à la moitié de la somme des objets.
 - Si oui, alors il existe une partition des objets en deux groupes de poids égaux.
 - Sinon, alors il n'existe pas de partition des objets en deux groupes de poids égaux.
 
+S'il existe une solution au problème Partition, alors il existe une solution au problème Sum.
+L'inverse et la négative sont vrais également.
+
+La réduction est donc polynomiale, car la résolution de Partition est polynomiale.
+
 :warning: On a ajouté une valeur à la liste des entiers pour que la somme des entiers soit égale à 2*cible.
 
-valeur ajoutée:
+valeur ajoutée :
 
 $$ 2\times c - \sum_{i=1}^{n}(xi) $$
 
@@ -154,17 +164,22 @@ On cherche une fonction de réduction permettant de résoudre le problème Sum e
 
 Pour cela, il faut adapter les données du problème Sum pour qu'elles soient compatibles et utilisables avec le problème BinPack.
 
-| Sum                                                                   | BinPack                                  |
-|-----------------------------------------------------------------------|------------------------------------------|
-| n -> nombre d'entiers                                                 | n -> nombre d'objets                     |
-| [x1, x2, ..., xn] + [2*cible - somme(x1, x2, ..., xn)] -> les entiers | [x1, x2, ..., xn] -> le poids des objets |
-| 2                                                                     | k -> nombre de sacs                      |
-| cible -> un entier cible                                              | c -> capactité d'un sac                  |
+| Sum                               | BinPack                                                                       |
+|-----------------------------------|-------------------------------------------------------------------------------|
+| n -> nombre d'entiers             | n -> nombre d'objets                                                          |
+| [x1, x2, ..., xn] -> les entiers  | [x1, x2, ..., xn] + [2*cible - somme(x1, x2, ..., xn)] -> le poids des objets |
+| None                              | 2 -> nombre de sacs                                                           |
+| cible -> un entier cible          | c -> capactité d'un sac                                                       |
 
 Résoudre le problème Sum revient à résoudre le problème BinPack suivant :
 - On cherche à savoir s'il existe un sac de capacité égale à la moitié de la somme des objets.
 - Si oui, alors il existe une partition des objets en deux groupes de poids égaux.
 - Sinon, alors il n'existe pas de partition des objets en deux groupes de poids égaux.
+
+S'il existe une solution au problème BinPack, alors il existe une solution au problème Sum.
+L'inverse et la négative sont vrais également.
+
+La réduction est donc polynomiale, car la résolution de BinPack est polynomiale.
 
 ### Question 5 : Proposer une réduction polynomiale de BinPackDiff dans BinPack (inutile de l’implémenter)
 
@@ -172,17 +187,29 @@ On cherche une fonction de réduction permettant de résoudre le problème BinPa
 
 Pour cela, il faut adapter les données du problème BinPackDiff pour qu'elles soient compatibles et utilisables avec le problème BinPack.
 
-| BinPackDiff                                                   | BinPack                                  |
-|---------------------------------------------------------------|------------------------------------------|
-| n -> nombre d'objets                                          | n -> nombre d'objets                     |
-| [x1, x2, ..., xn] -> le poids des objets                      | [x1, x2, ..., xn] -> le poids des objets |
-| k -> nombre de sacs                                           | k -> nombre de sacs                      |                        
-| min([c1, c2, ..., ck]) -> le sac avec la plus petite capacité | c -> capactité d'un sac                  |
+| BinPackDiff                                 | BinPack                                                                                                     |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| n -> nombre d'objets                        | n -> nombre d'objets                                                                                        |
+| [x1, x2, ..., xn] -> le poids des objets    | [sum([c1, c2, ..., ck]) - c1, ... , sum([c1, c2, ..., ck]) - ck] + [x1, x2, ..., xn] -> le poids des objets |
+| k -> nombre de sacs                         | k -> nombre de sacs                                                                                         |                        
+| [c1, c2, ..., ck] -> les capacités des sacs | sum([c1, c2, ..., ck]) -> capacité d'un sac                                                                 |
+
+:warning: Voici une explication de l'astuce réalisée pour la réduction :
+
+On prend une capacité de sac beaucoup plus grande que les capacités données dans BinPackDiff. (Ici on prend la somme des capacités des sacs, mais rien n'empêche de prendre une valeur plus grande).
+Ensuite, on va ajouter dans chaque sac un objet factice pour que la capacité restante du sac, soit celle donnée dans BinPackDiff.
+L'objet factice prend dans notre cas la valeur suivante (cette valeur est à adapter en fonction de la valeur choisie pour la capacité des sacs) :
+$$ \sum_{i=1}^{k}(ci) - ci $$
 
 Résoudre le problème BinPackDiff revient à résoudre le problème BinPack suivant :
 - On cherche à savoir s'il existe une solution en modifiant la donnée de telle sorte à ce que la capacité d'un sac soit égale à la plus petite capacité des sacs.
 - Si oui, alors il existe une solution.
 - Sinon, alors il n'existe probablement pas de solution.
+
+S'il existe une solution au problème BinPack, alors il existe une solution au problème BinPackDiff.
+L'inverse et la négative sont vrais également.
+
+La réduction est donc polynomiale, car la résolution de BinPack est polynomiale.
 
 ## 3. Optimisation versus Décision
 
