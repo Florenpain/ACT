@@ -94,12 +94,12 @@ On cherche une fonction de réduction permettant de résoudre le problème Parti
 
 Pour cela, il faut adapter les données du problème Partition pour qu'elles soient compatibles et utilisables avec le problème BinPack.
     
-| Partition                        | BinPack                                                                  |
-|----------------------------------|--------------------------------------------------------------------------|
-| n -> un nombre d'entiers         | n -> nombre d'objets                                                     |
-| None                             | 2 -> nombre de sacs                                                      |
-| None                             | (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2]) -> capactité d'un sac |
-| [x1, x2, ..., xn] -> les entiers | [x1, x2, ..., xn] -> le poids des objets                                 |
+| Partition                        | BinPack                                                                 |
+|----------------------------------|-------------------------------------------------------------------------|
+| n -> un nombre d'entiers         | n -> nombre d'objets                                                    |
+| None                             | 2 -> nombre de sacs                                                     |
+| None                             | (sum(x1, x2, ..., xn)/2 + sum(x1, x2, ..., xn)%2]) -> capacité d'un sac |
+| [x1, x2, ..., xn] -> les entiers | [x1, x2, ..., xn] -> le poids des objets                                |
 
 Résoudre le problème Partition revient à résoudre le problème BinPack suivant :
 - On cherche à savoir s'il existe un sac de capacité égale à la moitié de la somme des objets.
@@ -169,7 +169,7 @@ Pour cela, il faut adapter les données du problème Sum pour qu'elles soient co
 | n -> nombre d'entiers             | n -> nombre d'objets                                                          |
 | [x1, x2, ..., xn] -> les entiers  | [x1, x2, ..., xn] + [2*cible - somme(x1, x2, ..., xn)] -> le poids des objets |
 | None                              | 2 -> nombre de sacs                                                           |
-| cible -> un entier cible          | c -> capactité d'un sac                                                       |
+| cible -> un entier cible          | c -> capacité d'un sac                                                        |
 
 Résoudre le problème Sum revient à résoudre le problème BinPack suivant :
 - On cherche à savoir s'il existe un sac de capacité égale à la moitié de la somme des objets.
