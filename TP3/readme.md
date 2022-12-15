@@ -199,6 +199,7 @@ Pour cela, il faut adapter les données du problème BinPackDiff pour qu'elles s
 On prend une capacité de sac beaucoup plus grande que les capacités données dans BinPackDiff. (Ici on prend la somme des capacités des sacs, mais rien n'empêche de prendre une valeur plus grande).
 Ensuite, on va ajouter dans chaque sac un objet factice pour que la capacité restante du sac, soit celle donnée dans BinPackDiff.
 L'objet factice prend dans notre cas la valeur suivante (cette valeur est à adapter en fonction de la valeur choisie pour la capacité des sacs) :
+
 $$ \sum_{i=1}^{k}(ci) - ci $$
 
 Résoudre le problème BinPackDiff revient à résoudre le problème BinPack suivant :
