@@ -5,10 +5,6 @@
 - [Florentin Bugnon](https://github.com/Florenpain)
 - [Florentin Havart](https://github.com/Florentin59H)
 
-## Description
-
-Ce dépôt contient les fichiers des TPs effectués lors de l'UE ACT à l'Université de Lille.
-
 ## Liste des TPs
 
 ### [TP1: Le plus grand rectangle](https://github.com/Florenpain/ACT/tree/main/TP1)
